@@ -6,17 +6,17 @@ import '../intel_geti_client.dart';
 extension ProjectAPI on IntelGetiClient {
   /// Create a [Project].
   Future<Project> createProject(
-      {required Workspace workspace, required Project project}) async {
+      {required String workspaceId, required Project project}) async {
     Response response =
-        await post('/workspaces/${workspace.id}/projects', project.toJson());
+        await post('/workspaces/$workspaceId/projects', project.toJson());
     Project result =
         Project.fromJson(json: response.data as Map<String, dynamic>);
     return result;
   }
 
-  /// Get info about all projects in [Workspace].
-  Future<List<Project>> getProjects({required Workspace workspace}) async {
-    Response response = await get('/workspaces/${workspace.id}/projects');
+  /// Get info about all projects in [Project].
+  Future<List<Project>> getProjects({required String workspaceId}) async {
+    Response response = await get('/workspaces/$workspaceId/projects');
     List<Project> result = <Project>[];
     for (Map<String, dynamic> json in response.data['projects']) {
       result.add(Project.fromJson(json: json));
@@ -26,9 +26,9 @@ extension ProjectAPI on IntelGetiClient {
 
   /// Get info about a [Project].
   Future<Project> getProject(
-      {required Workspace workspace, required String projectId}) async {
+      {required String workspaceId, required String projectId}) async {
     Response response =
-        await get('/workspaces/${workspace.id}/projects/$projectId');
+        await get('/workspaces/$workspaceId/projects/$projectId');
     Project project =
         Project.fromJson(json: response.data as Map<String, dynamic>);
     return project;
@@ -36,9 +36,9 @@ extension ProjectAPI on IntelGetiClient {
 
   /// Edit a [Project].
   Future<Project> updateProject(
-      {required Workspace workspace, required Project project}) async {
+      {required String workspaceId, required Project project}) async {
     Response response = await put(
-        '/workspaces/${workspace.id}/projects/${project.id}', project.toJson());
+        '/workspaces/$workspaceId/projects/${project.id}', project.toJson());
     Project updatedProject =
         Project.fromJson(json: response.data as Map<String, dynamic>);
     return updatedProject;
@@ -46,9 +46,9 @@ extension ProjectAPI on IntelGetiClient {
 
   /// Delete a [Project].
   Future<bool> deleteProject(
-      {required Workspace workspace, required String projectId}) async {
+      {required String workspaceId, required String projectId}) async {
     Response response =
-        await delete('/workspaces/${workspace.id}/projects/$projectId');
+        await delete('/workspaces/$workspaceId/projects/$projectId');
     return response.statusCode! == 200;
   }
 }

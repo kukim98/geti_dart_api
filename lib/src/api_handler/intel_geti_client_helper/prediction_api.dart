@@ -4,18 +4,18 @@ import 'package:intel_geti_api/src/data_structure/data_structure.dart';
 import '../intel_geti_client.dart';
 
 extension PredictionApi on IntelGetiClient {
-  /// Get AI prediction for an image.
+  /// Get a prediction for a [Media] image.
   ///
   /// If there are no predictions available for the image, it returns null.
   /// This is primarily due to the lack of a trained model.
-  Future<AnnotationScene?> getPrediction(
-      {required Workspace workspace,
+  Future<AnnotationScene?> getImagePrediction(
+      {required String workspaceId,
       required Project project,
-      required Dataset dataset,
-      required Media media,
+      required String datasetId,
+      required String mediaId,
       String predictionType = 'latest'}) async {
     Response response = await get(
-        '/workspaces/${workspace.id}/projects/${project.id}/datasets/${dataset.id}/media/images/${media.id}/predictions/$predictionType');
+        '/workspaces/$workspaceId/projects/${project.id}/datasets/$datasetId/media/images/$mediaId/predictions/$predictionType');
     if (response.statusCode! == 204) {
       return null;
     }

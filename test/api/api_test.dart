@@ -24,7 +24,7 @@ void main() {
       testPassword = map['TEST_PASSWORD'];
     });
 
-    test('is successful with correct credentials', () async {
+    test('with correct credentials is successful', () async {
       Map<String, dynamic> data = {
         'login': testUserId,
         'password': testPassword
@@ -34,7 +34,7 @@ void main() {
       expect(true, await geti.authenticate(data));
     });
 
-    test('is unsuccessful with incorrect credentials', () async {
+    test('with incorrect credentials is unsuccessful', () async {
       Map<String, dynamic> data = {
         'login': testUserId,
         'password': 'INCORRECT-PASSWORD'
@@ -81,13 +81,6 @@ void main() {
       };
       geti = IntelGetiClient(getiServerURL: testServer, userID: testUserId);
       expect(true, await geti.authenticate(data));
-    });
-
-    group('to create a project', () {
-      test('is successful.', () async {
-        List<Workspace> workspaces = await geti.getWorkspaces();
-        expect(true, workspaces.isNotEmpty);
-      });
     });
   });
 }

@@ -10,6 +10,8 @@ class Media {
   String type;
   DateTime uploadTime;
 
+  bool get isImage => mediaInformation is ImageMediaInformation;
+
   Media({
     required this.id,
     required this.uploaderId,

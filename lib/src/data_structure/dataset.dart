@@ -19,4 +19,11 @@ class Dataset {
       useForTraining: json['use_for_training']
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'use_for_training': useForTraining
+    };
+  }
 }

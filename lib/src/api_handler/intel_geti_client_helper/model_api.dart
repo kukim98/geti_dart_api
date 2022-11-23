@@ -1,7 +1,4 @@
-import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:intel_geti_api/src/data_structure/data_structure.dart';
 
 import '../intel_geti_client.dart';
