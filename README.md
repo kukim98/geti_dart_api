@@ -1,39 +1,50 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+Intel GETi API in Dart.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This Dart plugin supports the most basic functions in Intel GETi that are deemed essential for mobile application uses.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+| Feature                                       | Supported?         |
+| -------                                       | :--------------:   |
+| Authentication with Username & Password       | :heavy_check_mark: |
+| Authentication with Access code               | :grey_exclamation: |
+| Create, Read, Update, Delete Projects         | :heavy_check_mark: |
+| Upload and Delete Images                      | :heavy_check_mark: |
+| Upload and Delete Annotations                 | :heavy_check_mark: |
+| Get AI predictions from pre-trained models    | :heavy_check_mark: |
+
 
 ## Getting started
+* You should have access to an Intel GETi server to try out the APIs.
+* Add the following lines of code to `pubspec.yaml` to add the package.
+```
+...
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+dependencies:
+    intel_geti_api:
+        git:
+            url: https://github.com/kukim98/geti_dart_api.git
+            ref: main
+
+...
+```
+* Save the changes and run `flutter pub get` to download the package.
+
 
 ## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
+* Construct a GETi API client with valid server IP address and user id.
 ```dart
-const like = 'sample';
+IntelGetiClient geti = IntelGetiClient(getiServerURL: serverIP, userID: userId);
+```
+* Call `authenticate` with valid user credentials to fully interact with Intel GETi.
+```dart
+Map<String, dynamic> data = {
+    'login': testUserId,
+    'password': testPassword
+};
+await geti.authenticate(data);
 ```
 
-## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+## Additional information
+* This package is a Dart version of [geti_sdk](https://github.com/openvinotoolkit/geti-sdk) which is written in Python and designed for PC uses. Because the Dart API was designed for mobile application uses, some features of Intel GETi may be omitted unless deemed necessary.
