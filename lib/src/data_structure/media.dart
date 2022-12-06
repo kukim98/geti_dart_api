@@ -10,6 +10,9 @@ class Media {
   String type;
   DateTime uploadTime;
 
+  // Extraneous attribute for convenience.
+  String datasetId;
+
   bool get isImage => mediaInformation is ImageMediaInformation;
 
   Media({
@@ -20,10 +23,11 @@ class Media {
     required this.annotationStatePerTask,
     required this.thumbnail,
     required this.type,
-    required this.uploadTime
+    required this.uploadTime,
+    required this.datasetId
   });
 
-  factory Media.fromJson({required Map<String, dynamic> json}){
+  factory Media.fromJson({required Map<String, dynamic> json, required String datasetId}){
     Map<String, String> result = {};
     for (Map<String, dynamic> item in json['annotation_state_per_task']){
       result[item['task_id']] = item['state'];
@@ -36,7 +40,8 @@ class Media {
       annotationStatePerTask: result,
       thumbnail: json['thumbnail'],
       type: json['type'],
-      uploadTime: DateTime.parse(json['upload_time'])
+      uploadTime: DateTime.parse(json['upload_time']),
+      datasetId: datasetId
     );
   }
 }

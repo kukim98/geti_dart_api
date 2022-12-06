@@ -78,18 +78,18 @@ extension MediaAPI on IntelGetiClient {
         '/workspaces/$workspaceId/projects/$projectId/datasets/$datasetId/media${(onlyImages == null) ? '' : ((onlyImages) ? '/images' : '/videos')}:query?limit=$limit${(skiptoken == null) ? '' : '&skiptoken=$skiptoken'}');
     List<Media> result = <Media>[];
     for (Map<String, dynamic> json in response.data['media']) {
-      result.add(Media.fromJson(json: json));
+      result.add(Media.fromJson(json: json, datasetId: datasetId));
     }
     return {'media': result, 'next_page': response.data['next_page']};
   }
 
   /// Return following media items given the next_page URL from GETi.
   Future<Map<String, dynamic>> getNextMedia(
-      {required String nextUrl, int limit = 100}) async {
+      {required String nextUrl, required String datasetId, int limit = 100}) async {
     Response response = await get('$nextUrl&limit=$limit');
     List<Media> result = <Media>[];
     for (Map<String, dynamic> json in response.data['media']) {
-      result.add(Media.fromJson(json: json));
+      result.add(Media.fromJson(json: json, datasetId: datasetId));
     }
     return {'media': result, 'next_page': response.data['next_page']};
   }
@@ -108,7 +108,7 @@ extension MediaAPI on IntelGetiClient {
         filters);
     List<Media> result = <Media>[];
     for (Map<String, dynamic> json in response.data['media']) {
-      result.add(Media.fromJson(json: json));
+      result.add(Media.fromJson(json: json, datasetId: datasetId));
     }
     return {'media': result, 'next_page': response.data['next_page']};
   }
@@ -127,7 +127,7 @@ extension MediaAPI on IntelGetiClient {
     Response response = await post(
         '/workspaces/$workspaceId/projects/$projectId/datasets/$datasetId/media/images',
         data);
-    Media result = Media.fromJson(json: response.data);
+    Media result = Media.fromJson(json: response.data, datasetId: datasetId);
     return result;
   }
 
@@ -140,7 +140,7 @@ extension MediaAPI on IntelGetiClient {
     bool isImage = true
   }) async {
     Response response = await get('/workspaces/$workspaceId/projects/$projectId/datasets/$datasetId/media/${(isImage) ? 'images' : 'videos'}/$mediaId');
-    Media result = Media.fromJson(json: response.data);
+    Media result = Media.fromJson(json: response.data, datasetId: datasetId);
     return result;
   }
 
@@ -194,7 +194,7 @@ extension MediaAPI on IntelGetiClient {
     Response response = await post(
         '/workspaces/$workspaceId/projects/$projectId/datasets/$datasetId/media/videos',
         data);
-    Media result = Media.fromJson(json: response.data);
+    Media result = Media.fromJson(json: response.data, datasetId: datasetId);
     return result;
   }
 
