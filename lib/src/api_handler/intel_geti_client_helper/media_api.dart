@@ -85,9 +85,13 @@ extension MediaAPI on IntelGetiClient {
 
   /// Return following media items given the next_page URL from GETi.
   Future<Map<String, dynamic>> getNextMedia(
-      {required String nextUrl, required String datasetId, int limit = 100}) async {
+      {required String nextUrl, int limit = 100}) async {
     Response response = await get('$nextUrl&limit=$limit');
     List<Media> result = <Media>[];
+    String datasetId = nextUrl.substring(
+      nextUrl.indexOf('datasets/') + 'datasets/'.length,
+      nextUrl.indexOf('/', nextUrl.indexOf('datasets/') + 'datasets/'.length)
+    );
     for (Map<String, dynamic> json in response.data['media']) {
       result.add(Media.fromJson(json: json, datasetId: datasetId));
     }
